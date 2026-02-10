@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@jobfinder.com",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "id": "0a4c",
+      "firstName": "Jakeem",
+      "lastName": "Thomas",
+      "email": "hafage@mailinator.com",
+      "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "baa8",
+      "firstName": "Doris",
+      "lastName": "Romero",
+      "email": "tyzukuzi@mailinator.com",
+      "password": "Pa$$w0rd!"
+    }
+  ],
+  "jobs": []
+}

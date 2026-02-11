@@ -24,6 +24,6 @@ export class JobFeedComponent {
 
   constructor(private http: HttpClient) {
     // Replace with your public API or aggregated API
-    this.jobs$ = this.http.get<any[]>('https://job-finder-api-nine.vercel.app/api/jobs');
+    this.jobs$ = this.http.get<any[]>('/api/jobs');
   }
 }

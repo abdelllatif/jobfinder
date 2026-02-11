@@ -1,1 +1,98 @@
-<p>profile works!</p>
+<div class="w-[100vw]">
+  <!-- Facebook-like Top Navigation Bar -->
+  <nav class="bg-white shadow-sm border-b border-gray-300 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center justify-between space-x-2">
+          <div class="w-10 h-10 fb-blue rounded-full flex items-center justify-between">
+            <span class="text-white font-bold text-xl"></span>
+          </div>
+        </div>
+        
+        <button 
+          (click)="logout()"
+          class="px-4 py-2 bg-red-800 text-white font-medium rounded-md text-sm transition-colors duration-200"
+        >
+          Log Out
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="min-h-screen bg-[#f0f2f5]">
+    
+    <!-- Cover Photo Area -->
+    <div class="bg-white">
+      <div class="mx-auto">
+        <!-- Cover Photo -->
+        <div class="h-[28vh] w-full bg-gradient-to-r from-blue-400 to-blue-600 relative">
+          <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+        </div>
+        
+        <!-- Profile Info Section -->
+        <div class="px-4 sm:px-6 lg:px-8">
+          <div class="relative">
+            <div class="flex flex-col sm:flex-row sm:items-end sm:space-x-5 pb-6 border-b border-gray-300">
+              
+              <!-- Profile Picture -->
+              <div class="-mt-16 sm:-mt-20 relative">
+                <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+                  <span class="text-white text-5xl sm:text-6xl font-bold">
+                  {{ (user?.firstName?.[0] || '') + (user?.lastName?.[0] || '') }}
+                  </span>
+                </div>
+              </div>
+              
+              <!-- User Info -->
+              <div class="mt-4 sm:mt-0 sm:flex-1 sm:pb-4">
+                <h1 class="text-3xl font-bold text-gray-900">
+                  {{ user?.firstName | titlecase }} {{ user?.lastName | titlecase }}
+                </h1>
+                <p class="text-gray-600 mt-1">{{ user?.email }}</p>
+                <p class="text-gray-500 text-sm mt-1">
+                </p>
+              </div>
+            </div>
+            
+            <!-- Tabs Navigation -->
+            <div class="mt-4">
+              <nav class="flex space-x-1 sm:space-x-4 overflow-x-auto scrollbar-hide" aria-label="Tabs">
+                <button
+                  *ngFor="let section of sections"
+                  (click)="switchSection(section.key)"
+                  class="tab-btn whitespace-nowrap pb-3 px-4 font-semibold text-sm sm:text-base text-gray-600 hover:bg-gray-100 rounded-t-lg transition-all"
+                  [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeSection === section.key}"
+                >
+                  {{ section.label }}
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Content Section -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      
+      <div *ngIf="activeSection === 'profile'" class="section-content">
+        <h2 class="text-2xl font-bold mb-4">Hello, {{ user?.firstName | titlecase }}!</h2>
+        <p class="text-gray-700">This is your profile section. More dynamic content will go here.</p>
+      </div>
+
+      <div *ngIf="activeSection === 'savedJobs'" class="section-content">
+        <p class="text-gray-700">Saved Jobs section is empty for now.</p>
+      </div>
+
+      <div *ngIf="activeSection === 'favoriteJobs'" class="section-content">
+        <p class="text-gray-700">Favorite Jobs section is empty for now.</p>
+      </div>
+
+      <div *ngIf="activeSection === 'settings'" class="section-content">
+        <p class="text-gray-700">Settings section is empty for now.</p>
+      </div>
+
+    </div>
+  </div>
+</div>

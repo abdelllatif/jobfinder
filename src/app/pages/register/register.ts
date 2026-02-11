@@ -32,7 +32,7 @@ export class SignupComponent {
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email,
-      password: this.password
+      password: this.password,
     };
 
     this.authService.checkEmailExists(newUser.email).subscribe(users => {

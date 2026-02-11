@@ -19,4 +19,10 @@ export class AuthService {
   checkEmailExists(email: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}?email=${email}`);
   }
+  login(email: string, password: string): Observable<User[]> {
+  return this.http.get<User[]>(
+    `${this.apiUrl}?email=${email}&password=${password}`
+  );
+}
+
 }

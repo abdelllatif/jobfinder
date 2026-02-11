@@ -1,0 +1,95 @@
+<div class="login-container">
+  <!-- Left Side - Image Section -->
+  <div class="login-image-section lg:h-screen">
+    <div class="login-overlay">
+      <h1>Welcome Back</h1>
+      <p>Sign in to continue your journey</p>
+    </div>
+  </div>
+
+  <!-- Right Side - Form Section -->
+  <div class="login-form-section">
+    <div class="login-form-wrapper">
+      <div class="login-header">
+        <h2>Sign In</h2>
+        <p>Access your account</p>
+      </div>
+
+     <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+
+  <!-- Email -->
+  <div class="login-group">
+    <label for="loginEmail">Email Address</label>
+    <input 
+      type="email"
+      id="loginEmail"
+      placeholder="Enter your email"
+      formControlName="email"
+      class="login-control"
+    />
+
+    <div class="login-validation"
+      *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+
+      <small *ngIf="loginForm.get('email')?.errors?.['required']">
+        Email is required
+      </small>
+
+      <small *ngIf="loginForm.get('email')?.errors?.['email']">
+        Invalid email format
+      </small>
+
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="login-group">
+    <label for="loginPassword">Password</label>
+    <input 
+      type="password"
+      id="loginPassword"
+      placeholder="Enter your password"
+      formControlName="password"
+      class="login-control"
+    />
+
+    <div class="login-validation"
+      *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+
+      <small *ngIf="loginForm.get('password')?.errors?.['required']">
+        Password is required
+      </small>
+
+      <small *ngIf="loginForm.get('password')?.errors?.['minlength']">
+        Minimum 6 characters required
+      </small>
+
+    </div>
+  </div>
+
+  <!-- Global Error -->
+  <div class="login-error-message" *ngIf="error">
+    <span>{{ error }}</span>
+  </div>
+
+<button 
+  type="submit" 
+  class="login-btn-submit" 
+  [disabled]="loginForm.invalid || loading"
+>
+  {{ loading ? 'Submitting...' : 'Sign In' }}
+</button>
+
+  <div class="login-divider">
+    <span>or</span>
+  </div>
+
+  <p class="signup-link">
+    Don't have an account? <a routerLink="/register">Sign Up</a>
+  </p>
+
+</form>
+
+    </div>
+  </div>
+</div>

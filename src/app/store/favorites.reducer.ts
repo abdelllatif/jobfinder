@@ -1,11 +1,37 @@
-// store/favorites.reducer.ts
 import { createReducer, on } from '@ngrx/store';
-import { addFavorite, removeFavorite } from './favorites.actions';
+import * as FavoritesActions from './favorites.actions';
 
-export const initialState: any[] = [];
+export interface FavoritesState {
+  favorites: any[];
+  loading: boolean;
+}
+
+export const initialState: FavoritesState = {
+  favorites: [],
+  loading: false
+};
 
 export const favoritesReducer = createReducer(
   initialState,
-  on(addFavorite, (state, { job }) => [...state, job]),
-  on(removeFavorite, (state, { jobId }) => state.filter(j => j.id !== jobId))
+
+  on(FavoritesActions.loadFavorites, (state) => ({
+    ...state,
+    loading: true
+  })),
+
+  on(FavoritesActions.loadFavoritesSuccess, (state, { favorites }) => ({
+    ...state,
+    favorites,
+    loading: false
+  })),
+
+  on(FavoritesActions.addFavorite, (state, { favorite }) => ({
+    ...state,
+    favorites: [...state.favorites, favorite]
+  })),
+
+  on(FavoritesActions.removeFavorite, (state, { id }) => ({
+    ...state,
+    favorites: state.favorites.filter(f => f.id !== id)
+  }))
 );

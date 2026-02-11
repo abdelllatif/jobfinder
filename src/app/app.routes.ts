@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Login } from './login/login';
 import { Profile } from './profile/profile';
 import { JobFeedComponent } from './job-feed/job-feed';
+import { JobDetails } from './job-details/job-details';
 
 export const routes: Routes = [
   { path: '', component: SignupComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   {path: 'dashboard', component: Profile},
   { path: 'feed', component: JobFeedComponent },
+  { path: 'jobs/:id', component: JobDetails },        
 
 ];
 

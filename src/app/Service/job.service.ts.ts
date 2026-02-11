@@ -19,4 +19,6 @@ export class JobService {
   getJobById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/jobs/${id}`);
   }
+
+
 }

@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth/auth';
+import { User } from '../core/models/User';
 
 @Component({
   selector: 'app-login',
@@ -42,32 +43,31 @@ export class Login {
 
   }
 
-   onLogin() {
+    onLogin() {
     this.error = '';
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       this.error = 'Please fix validation errors';
       return;
     }
 
-    this.loading = true; // 🔹 start loading
-
+    this.loading = true;
     const { email, password } = this.loginForm.value;
 
     this.authService.login(email.trim(), password.trim()).subscribe({
-      next: (users) => {
-        this.loading = false; // 🔹 stop loading
+      next: (user: User | null) => {
+        this.loading = false;
 
-        if (users.length > 0) {
-          localStorage.setItem('user', JSON.stringify(users[0]));
+        if (user) {
+          // Save user in localStorage without password
+          localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate(['/dashboard']);
         } else {
           this.error = 'Invalid email or password';
         }
       },
       error: () => {
-        this.loading = false; // 🔹 stop loading
+        this.loading = false;
         this.error = 'Server error. Try again later.';
       }
     });

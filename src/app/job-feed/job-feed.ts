@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JobService } from '../Service/job.service.ts';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-job-feed',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './job-feed.html',
 styleUrls: ['./job-feed.css'],
 })

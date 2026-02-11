@@ -1,1 +1,25 @@
-<p>job-details works!</p>
+<div *ngIf="loading">
+  Loading job details...
+</div>
+
+<div *ngIf="!loading && job">
+
+  <h2>{{ job.name }}</h2>
+
+  <p><strong>Company:</strong> {{ job.company?.name }}</p>
+
+  <p><strong>Locations:</strong>
+    <span *ngFor="let loc of job.locations">
+      {{ loc.name }}
+    </span>
+  </p>
+
+  <p><strong>Publication Date:</strong> {{ formatDate(job.publication_date) }}</p>
+
+  <div [innerHTML]="job.contents"></div>
+
+  <a [href]="job.refs?.landing_page" target="_blank">
+    Apply Now
+  </a>
+
+</div>

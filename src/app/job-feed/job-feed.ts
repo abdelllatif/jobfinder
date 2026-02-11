@@ -1,29 +1,76 @@
-// job-feed.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { JobService } from '../Service/job.service.ts';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-job-feed',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
-  template: `
-    <div class="job-feed">
-      <h2 class="text-2xl font-bold mb-4">Job Feed</h2>
-      <div *ngFor="let job of jobs$ | async" class="job-card p-4 mb-3 bg-white rounded shadow">
-        <h3 class="font-semibold">{{ job.title }}</h3>
-        <p>{{ job.company }} - {{ job.location }}</p>
-        <a [href]="job.url" target="_blank" class="text-blue-600 underline">View Job</a>
-      </div>
-    </div>
-  `
+  imports: [CommonModule, FormsModule],
+  templateUrl: '../job-feed/job-feed.html',
+  styleUrl: '../job-feed/job-feed.css',
 })
 export class JobFeedComponent {
-  jobs$: Observable<any[]>;
 
-  constructor(private http: HttpClient) {
-    // Replace with your public API or aggregated API
-    this.jobs$ = this.http.get<any[]>('/api/jobs');
+  jobs: any[] = [];
+  filteredJobs: any[] = [];
+  searchKeyword: string = '';
+  loading = false;
+  errorMessage = '';
+  currentPage = 1;
+
+  constructor(private jobService: JobService) {}
+
+  ngOnInit() {
+    this.fetchJobs();
+  }
+
+  fetchJobs() {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.jobService.getJobs(this.currentPage).subscribe({
+      next: (res) => {
+        this.jobs = res.results;
+        this.applyFilters();
+        this.loading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Error loading jobs';
+        this.loading = false;
+      }
+    });
+  }
+
+  applyFilters() {
+    this.filteredJobs = this.jobs
+      .filter(job =>
+        job.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      )
+      .sort((a, b) =>
+        new Date(b.publication_date).getTime() -
+        new Date(a.publication_date).getTime()
+      )
+      .slice(0, 10); // 10 per page
+  }
+
+  search() {
+    this.applyFilters();
+  }
+
+  nextPage() {
+    this.currentPage++;
+    this.fetchJobs();
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.fetchJobs();
+    }
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('user');
   }
 }

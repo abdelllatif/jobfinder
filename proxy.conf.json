@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://job-finder-api-nine.vercel.app",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
